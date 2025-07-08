@@ -1,5 +1,6 @@
 "use server";
 import prisma from "@/lib/prisma";
+import { Project } from "@/types/project";
 
 export async function filterProjectsAction({
   name,
@@ -29,5 +30,5 @@ export async function filterProjectsAction({
       ...(endDate ? { endDate: { lte: endDate } } : {}),
     },
     orderBy: { createdAt: "desc" },
-  });
+  }) as unknown as Project[];
 } 

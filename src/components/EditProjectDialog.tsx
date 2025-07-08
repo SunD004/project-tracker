@@ -28,6 +28,7 @@ import { updateProjectAction } from "@/app/actions/updateProjectAction";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import z from "zod";
 
 export function EditProjectDialog({ project, ...props }: { project: Project } & React.HTMLAttributes<HTMLButtonElement>) {
   const [open, setOpen] = useState(false);
@@ -55,7 +56,7 @@ export function EditProjectDialog({ project, ...props }: { project: Project } & 
     form.setValue("status", value);
   }
 
-  function handleSubmit(values: any) {
+  function handleSubmit(values: z.infer<typeof projectSchema>) {
     setError(null);
     startTransition(async () => {
       const res = await updateProjectAction({ id: project.id, ...values });

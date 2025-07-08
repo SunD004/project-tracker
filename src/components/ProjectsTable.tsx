@@ -17,11 +17,12 @@ import {
 } from "@/components/ProjectsFilterForm";
 import { filterProjectsAction } from "@/app/actions/filterProjectsAction";
 import { Skeleton } from "./ui/skeleton";
+import { type Project } from "@/types/project";
 
 export default function ProjectsTable({
   initialProjects,
 }: {
-  initialProjects: any[];
+  initialProjects: Project[];
 }) {
   const [projects, setProjects] = useState(initialProjects);
   const [isPending, startTransition] = useTransition();
