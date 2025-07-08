@@ -10,11 +10,11 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+  {
+    ignores: ["dist/**", "node_modules/**", "src/generated/prisma/*"],
+  },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
 ];
 
-export default {
-  ignorePatterns: [
-    "src/generated/prisma/wasm.js",
-  ],
-};
+
+export default eslintConfig;

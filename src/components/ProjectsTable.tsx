@@ -26,7 +26,6 @@ export default function ProjectsTable({
   const [projects, setProjects] = useState(initialProjects);
   const [isPending, startTransition] = useTransition();
 
-
   async function handleFilter(filters: ProjectFilters) {
     startTransition(async () => {
       const filtered = await filterProjectsAction({
@@ -54,34 +53,68 @@ export default function ProjectsTable({
             <span className="text-gray-700">Chargement...</span>
           </div>
         )}
-        <Table className={"min-w-[700px] md:min-w-0 "+(isPending ? 'opacity-50 pointer-events-none' : '')}>
+        <Table
+          className={
+            "min-w-[700px] md:min-w-0 " +
+            (isPending ? "opacity-50 pointer-events-none" : "")
+          }
+        >
           <TableHeader>
             <TableRow>
-              <TableHead className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">Nom</TableHead>
-              <TableHead className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">Description</TableHead>
-              <TableHead className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">Statut</TableHead>
-              <TableHead className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">Budget</TableHead>
-              <TableHead className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">Début</TableHead>
-              <TableHead className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">Fin</TableHead>
-              <TableHead className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2 text-right">Actions</TableHead>
+              <TableHead className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">
+                Nom
+              </TableHead>
+              <TableHead className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">
+                Description
+              </TableHead>
+              <TableHead className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">
+                Statut
+              </TableHead>
+              <TableHead className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">
+                Budget
+              </TableHead>
+              <TableHead className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">
+                Début
+              </TableHead>
+              <TableHead className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">
+                Fin
+              </TableHead>
+              <TableHead className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2 text-right">
+                Actions
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {projects.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className="text-center text-gray-500 text-xs md:text-sm">
+                <TableCell
+                  colSpan={7}
+                  className="text-center text-gray-500 text-xs md:text-sm"
+                >
                   Aucun projet pour l'instant.
                 </TableCell>
               </TableRow>
             ) : (
               projects.map((p) => (
                 <TableRow key={p.id}>
-                  <TableCell className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">{p.name}</TableCell>
-                  <TableCell className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">{p.description}</TableCell>
-                  <TableCell className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">{p.status}</TableCell>
-                  <TableCell className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">{p.budget} €</TableCell>
-                  <TableCell className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">{p.startDate}</TableCell>
-                  <TableCell className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">{p.endDate}</TableCell>
+                  <TableCell className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">
+                    {p.name}
+                  </TableCell>
+                  <TableCell className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">
+                    {p.description}
+                  </TableCell>
+                  <TableCell className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">
+                    {p.status}
+                  </TableCell>
+                  <TableCell className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">
+                    {p.budget} €
+                  </TableCell>
+                  <TableCell className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">
+                    {p.startDate}
+                  </TableCell>
+                  <TableCell className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2">
+                    {p.endDate}
+                  </TableCell>
                   <TableCell className="text-xs px-2 py-1 md:text-sm md:px-4 md:py-2 text-right">
                     <div className="flex gap-2 justify-end flex-wrap">
                       <EditProjectDialog project={p} />

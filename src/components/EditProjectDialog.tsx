@@ -29,7 +29,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-export function EditProjectDialog({ project }: { project: Project }) {
+export function EditProjectDialog({ project, ...props }: { project: Project } & React.HTMLAttributes<HTMLButtonElement>) {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
@@ -71,7 +71,7 @@ export function EditProjectDialog({ project }: { project: Project }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
+        <Button variant="outline" size="sm" {...props}>
           Modifier
         </Button>
       </DialogTrigger>
@@ -85,7 +85,7 @@ export function EditProjectDialog({ project }: { project: Project }) {
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-1">Nom</label>
-            <Input {...form.register("name")} required />
+            <Input data-testid="edit-project-name" {...form.register("name")} required />
             {form.formState.errors.name && (
               <div className="text-red-600 text-sm">
                 {form.formState.errors.name.message}
@@ -96,7 +96,7 @@ export function EditProjectDialog({ project }: { project: Project }) {
             <label className="block text-sm font-medium mb-1">
               Description
             </label>
-            <Textarea {...form.register("description")} required rows={2} />
+            <Textarea data-testid="edit-project-description" {...form.register("description")} required rows={2} />
             {form.formState.errors.description && (
               <div className="text-red-600 text-sm">
                 {form.formState.errors.description.message}
@@ -106,6 +106,7 @@ export function EditProjectDialog({ project }: { project: Project }) {
           <div>
             <label className="block text-sm font-medium mb-1">Statut</label>
             <Select
+              data-testid="edit-project-status"
               value={form.watch("status")}
               onValueChange={handleStatusChange}
             >
@@ -128,12 +129,7 @@ export function EditProjectDialog({ project }: { project: Project }) {
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Budget (€)</label>
-            <Input
-              type="number"
-              min={0}
-              {...form.register("budget", { valueAsNumber: true })}
-              required
-            />
+            <Input data-testid="edit-project-budget" type="number" min={0} {...form.register("budget", { valueAsNumber: true })} required />
             {form.formState.errors.budget && (
               <div className="text-red-600 text-sm">
                 {form.formState.errors.budget.message}
@@ -143,7 +139,7 @@ export function EditProjectDialog({ project }: { project: Project }) {
           <div className="flex flex-col sm:flex-row gap-2">
             <div className="flex-1">
               <label className="block text-sm font-medium mb-1">Début</label>
-              <Input type="date" {...form.register("startDate")} required />
+              <Input data-testid="edit-project-startDate" type="date" {...form.register("startDate")} required />
               {form.formState.errors.startDate && (
                 <div className="text-red-600 text-sm">
                   {form.formState.errors.startDate.message}
@@ -152,7 +148,7 @@ export function EditProjectDialog({ project }: { project: Project }) {
             </div>
             <div className="flex-1">
               <label className="block text-sm font-medium mb-1">Fin</label>
-              <Input type="date" {...form.register("endDate")} required />
+              <Input data-testid="edit-project-endDate" type="date" {...form.register("endDate")} required />
               {form.formState.errors.endDate && (
                 <div className="text-red-600 text-sm">
                   {form.formState.errors.endDate.message}
@@ -166,6 +162,7 @@ export function EditProjectDialog({ project }: { project: Project }) {
               type="submit"
               disabled={isPending}
               className="w-full sm:w-auto"
+              data-testid="edit-project-save"
             >
               Enregistrer
             </Button>

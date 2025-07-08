@@ -1,10 +1,9 @@
 "use server";
 import prisma from "@/lib/prisma";
-import { projectSchema } from "@/types/project";
+import { type Project, projectSchema } from "@/types/project";
 import { revalidatePath } from "next/cache";
 
-export async function updateProjectAction(data: any) {
-  // On valide les champs sauf l'id
+export async function updateProjectAction(data: Project) {
   const { id, ...rest } = data;
   const parsed = projectSchema.safeParse(rest);
   if (!parsed.success) {
