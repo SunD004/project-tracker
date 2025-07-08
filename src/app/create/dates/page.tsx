@@ -17,6 +17,7 @@ import { projectSchema } from "@/types/project";
 import { z } from "zod";
 import { useProjectFormStore } from "@/store/projectFormStore";
 import { createProjectAction } from "@/app/actions/createProjectAction";
+import { toast } from "sonner";
 
 const stepSchema = projectSchema.pick({ startDate: true, endDate: true });
 type StepData = z.infer<typeof stepSchema>;
@@ -58,6 +59,7 @@ export default function DatesPage() {
         setError(msg);
         return;
       }
+      toast(`Projet ${draft.name} créé avec succès.`)
       resetDraft();
       router.push("/");
       router.refresh();

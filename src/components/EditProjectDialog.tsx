@@ -25,16 +25,16 @@ import {
   type Project,
 } from "@/types/project";
 import { updateProjectAction } from "@/app/actions/updateProjectAction";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner"
 import z from "zod";
 
 export function EditProjectDialog({ project, ...props }: { project: Project } & React.HTMLAttributes<HTMLButtonElement>) {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
+  
 
   const form = useForm({
     resolver: zodResolver(projectSchema),
@@ -64,8 +64,8 @@ export function EditProjectDialog({ project, ...props }: { project: Project } & 
         setError("Erreur lors de la modification du projet");
         return;
       }
-      router.refresh();
       setOpen(false);
+      toast(`Projet ${project.name} modifié avec succès.`)
     });
   }
 

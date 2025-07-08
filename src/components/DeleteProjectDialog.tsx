@@ -1,8 +1,19 @@
 "use client";
 import { useTransition } from "react";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { deleteProjectAction } from "@/app/actions/deleteProjectAction";
+import { toast } from "sonner";
 
 export function DeleteProjectDialog({ projectId }: { projectId: string }) {
   const [isPending, startTransition] = useTransition();
@@ -10,13 +21,16 @@ export function DeleteProjectDialog({ projectId }: { projectId: string }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive" size="sm">Supprimer</Button>
+        <Button variant="destructive" size="sm">
+          Supprimer
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Supprimer ce projet ?</AlertDialogTitle>
           <AlertDialogDescription>
-            Cette action est irréversible. Voulez-vous vraiment supprimer ce projet ?
+            Cette action est irréversible. Voulez-vous vraiment supprimer ce
+            projet ?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -24,7 +38,12 @@ export function DeleteProjectDialog({ projectId }: { projectId: string }) {
           <AlertDialogAction asChild>
             <Button
               variant="destructive"
-              onClick={() => startTransition(async () => { await deleteProjectAction(projectId); })}
+              onClick={() =>
+                startTransition(async () => {
+                  await deleteProjectAction(projectId);
+                  toast(`Projet ${projectId} supprimé avec succès.`);
+                })
+              }
               disabled={isPending}
             >
               Confirmer
@@ -34,4 +53,4 @@ export function DeleteProjectDialog({ projectId }: { projectId: string }) {
       </AlertDialogContent>
     </AlertDialog>
   );
-} 
+}

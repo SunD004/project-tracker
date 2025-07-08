@@ -1,5 +1,5 @@
 "use client";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import {
   Table,
   TableBody,
@@ -26,6 +26,10 @@ export default function ProjectsTable({
 }) {
   const [projects, setProjects] = useState(initialProjects);
   const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    setProjects(initialProjects);
+  }, [initialProjects]);
 
   async function handleFilter(filters: ProjectFilters) {
     startTransition(async () => {
