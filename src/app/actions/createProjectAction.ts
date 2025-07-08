@@ -1,6 +1,7 @@
 "use server";
 import  prisma  from "@/lib/prisma";
 import { projectSchema } from "@/types/project";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 export async function createProjectAction(data: z.infer<typeof projectSchema>) {
@@ -11,5 +12,6 @@ export async function createProjectAction(data: z.infer<typeof projectSchema>) {
   const project = await prisma.project.create({
     data: parsed.data,
   });
+  revalidatePath("/");
   return { project };
 } 
